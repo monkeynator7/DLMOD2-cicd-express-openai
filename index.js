@@ -31,15 +31,15 @@ app.post('/chat', async (req, res) => {
     }
 
     try {
-        const response = await openai.createChatCompletion({
+        const response = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
             messages: [{ role: 'user', content: question }],
             max_tokens: 100,
         });
-        const answer = response.data.choices[0].message.content;
-        res.json({ answer: response.data.choices[0].message.content });
+        const answer = response.choices[0].message.content;
+        res.json({ answer });
     } catch (error) {
         console.error('Error communicating with OpenAI:', error);
         res.status(500).json({ error: 'Error communicating with OpenAI' });
     }
-});
+}); 
