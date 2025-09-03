@@ -19,9 +19,9 @@ app.get('/status', (req, res) => {
 });
 
 // Create a post endpoint at /chat tthat recieves a JSON body with a "question" property, the question must not be empty, use OPENAI client to get the response, return a json response and handle errors
-const { OpenAIApi } = require('openai');
+const { OpenAI } = require('openai');
 
-const openai = new OpenAIApi({ apiKey: process.env.OPENAI_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.post('/chat', async (req, res) => {
     const { question } = req.body;
