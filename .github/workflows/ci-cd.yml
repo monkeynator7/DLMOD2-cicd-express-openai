@@ -1,0 +1,30 @@
+name: CI/CD for Express OpenAI App
+on:
+  push:
+    branches: [ main ]
+jobs: 
+  ci_job:
+    name: CI Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+  cd_job:
+    needs: ci_job # This job depends on the successful completion of the ci_job
+    name: CD Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute hook to deploy render
+        run: curl -X POST ${{ secrets.RENDER_HOOK_URL }}
